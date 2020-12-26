@@ -18,17 +18,11 @@
     <ClCompile Include="源.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="ParseHTTP.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="Util.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ParseHTTP.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="Util.h">
       <Filter>头文件</Filter>
     </ClInclude>

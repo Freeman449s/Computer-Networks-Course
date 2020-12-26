@@ -1,7 +1,6 @@
 #include <fstream>
 #include <iostream>
 #include <map>
-#include "ParseHTTP.h"
 #include <set>
 #include <string>
 #include <thread>
@@ -163,7 +162,6 @@ void recvRequest(int clientID, map<int, struct sockaddr_in>& clientAddrs, map<in
 void processRequest(const char* pkt, const int length) {
 	RequestType type = parseRequestType(pkt, length);
 	char* const sendBuf = new char[BUFFER_SIZE];
-	char* sendPtr = sendBuf;
 
 	if (type == GET) {
 		string filePath = SERVER_ROOT + parseFilePath(pkt, length);
@@ -171,22 +169,19 @@ void processRequest(const char* pkt, const int length) {
 		fs.open(filePath.c_str(), ios::binary | ios::in);
 		if (!fs.is_open()) { //文件不存在
 			fs.open(SERVER_ROOT + "\\NotFound.html", ios::in | ios::binary);
-			fs.seekg(0, ios::end);	//g: get, seekg用于已经打开要进行读取的文件
-									//参数：偏离量，起始位置
-			int fileLength = fs.tellg();
+			constructPkt("404", "text/html", fs, sendBuf);
+			fs.close();
 
-			string firstLine = "HTTP/1.1 404 Not Found\n";
-			string typeLine = "Content-Type: text/html\n";
-			string lengthLine = "Content-Length: ";
-			appendInt(lengthLine, fileLength);
+			//发送至客户端
 			//todo
+
 		}
-		else {
+		else { //文件存在，返回文件
 			//todo
 			fs.close();
 		}
 	}
-	else {
+	else { //type == POST
 		//todo
 	}
 }
