@@ -1,0 +1,5 @@
+﻿  源.cpp
+e:\项目\c++\3年级\计算机网络\lab7_sampleserver\lab7_sampleserver\源.cpp(21): warning C4326: “main”的返回类型应为“int”而非“void”
+e:\项目\c++\3年级\计算机网络\lab7_sampleserver\lab7_sampleserver\源.cpp(100): warning C4996: 'inet_ntoa': Use inet_ntop() or InetNtop() instead or define _WINSOCK_DEPRECATED_NO_WARNINGS to disable deprecated API warnings
+  e:\windows kits\10\include\10.0.17763.0\um\winsock2.h(1849): note: 参见“inet_ntoa”的声明
+  Lab7_SampleServer.vcxproj -> E:\项目\C++\3年级\计算机网络\Lab7_SampleServer\Debug\Lab7_SampleServer.exe

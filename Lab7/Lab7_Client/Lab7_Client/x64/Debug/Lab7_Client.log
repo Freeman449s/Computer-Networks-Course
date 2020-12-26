@@ -1,0 +1,5 @@
+﻿  client.cpp
+e:\项目\c++\3年级\计算机网络\lab7_client\lab7_client\client.cpp(183): warning C4267: “=”: 从“size_t”转换到“int”，可能丢失数据
+  thread.cpp
+  正在生成代码...
+  Lab7_Client.vcxproj -> E:\项目\C++\3年级\计算机网络\Lab7_Client\x64\Debug\Lab7_Client.exe
