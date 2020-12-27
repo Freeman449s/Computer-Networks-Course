@@ -1,13 +1,8 @@
-﻿  Util.cpp
-E:\工程文件\C++\3年级\Computer-Networks-Course\Lab8\Lab8\Util.h(13,45): warning C4227: 使用了记时错误: 忽略引用上的限定符
-E:\工程文件\C++\3年级\Computer-Networks-Course\Lab8\Lab8\Util.h(13,78): warning C4227: 使用了记时错误: 忽略引用上的限定符
-E:\工程文件\C++\3年级\Computer-Networks-Course\Lab8\Lab8\Util.h(13,97): warning C4227: 使用了记时错误: 忽略引用上的限定符
-E:\工程文件\C++\3年级\Computer-Networks-Course\Lab8\Lab8\Util.h(16,31): warning C4227: 使用了记时错误: 忽略引用上的限定符
-E:\工程文件\C++\3年级\Computer-Networks-Course\Lab8\Lab8\Util.cpp(7,2): error C4996: 'itoa': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _itoa. See online help for details.
-E:\工程文件\C++\3年级\Computer-Networks-Course\Lab8\Lab8\Util.cpp(12,45): warning C4227: 使用了记时错误: 忽略引用上的限定符
-E:\工程文件\C++\3年级\Computer-Networks-Course\Lab8\Lab8\Util.cpp(12,78): warning C4227: 使用了记时错误: 忽略引用上的限定符
-E:\工程文件\C++\3年级\Computer-Networks-Course\Lab8\Lab8\Util.cpp(12,97): warning C4227: 使用了记时错误: 忽略引用上的限定符
-E:\工程文件\C++\3年级\Computer-Networks-Course\Lab8\Lab8\Util.cpp(15,17): warning C4244: “初始化”: 从“std::streamoff”转换到“int”，可能丢失数据
-E:\工程文件\C++\3年级\Computer-Networks-Course\Lab8\Lab8\Util.cpp(42,31): warning C4227: 使用了记时错误: 忽略引用上的限定符
-E:\工程文件\C++\3年级\Computer-Networks-Course\Lab8\Lab8\Util.cpp(43,13): warning C4244: “初始化”: 从“std::streamoff”转换到“int”，可能丢失数据
-E:\工程文件\C++\3年级\Computer-Networks-Course\Lab8\Lab8\Util.cpp(45,17): warning C4244: “初始化”: 从“std::streamoff”转换到“int”，可能丢失数据
+﻿  源.cpp
+E:\工程文件\C++\3年级\Computer-Networks-Course\Lab8\Lab8\Util.h(15,44): warning C4227: 使用了记时错误: 忽略引用上的限定符
+E:\工程文件\C++\3年级\Computer-Networks-Course\Lab8\Lab8\Util.h(15,77): warning C4227: 使用了记时错误: 忽略引用上的限定符
+E:\工程文件\C++\3年级\Computer-Networks-Course\Lab8\Lab8\Util.h(15,96): warning C4227: 使用了记时错误: 忽略引用上的限定符
+E:\工程文件\C++\3年级\Computer-Networks-Course\Lab8\Lab8\Util.h(18,31): warning C4227: 使用了记时错误: 忽略引用上的限定符
+E:\工程文件\C++\3年级\Computer-Networks-Course\Lab8\Lab8\源.cpp(33,6): warning C4101: “ret”: 未引用的局部变量
+E:\工程文件\C++\3年级\Computer-Networks-Course\Lab8\Lab8\源.cpp(225): warning C4715: “processRequest”: 不是所有的控件路径都返回值
+  Lab8.vcxproj -> E:\工程文件\C++\3年级\Computer-Networks-Course\Lab8\x64\Debug\Lab8.exe
