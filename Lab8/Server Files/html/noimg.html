@@ -1,11 +1,25 @@
+<!DOCTYPE html>
 <html>
-<head><title>Test</title></head>
+
+<head>
+    <title>
+        Login
+    </title>
+</head>
+
 <body>
-<h1>This is a test</h1>
-<form action="dopost" method="POST">
-    Login:<input name="login">
-    Pass:<input name="pass">
-    <input type="submit" value="login">
-</form>
+    <h1 style="text-align: center;">
+        Please Login
+    </h1>
+    <div style="text-align: center;">
+        <form method="post" action="http://localhost:1042/dopost" enctype="multipart/form-data">
+            Account:
+            <input type="text" name="account" />
+            Password:
+            <input type="text" name="pwd" />
+            <input type="submit" value="Login" />
+        </form>
+    </div>
 </body>
+
 </html>

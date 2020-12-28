@@ -8,8 +8,8 @@
 using namespace std;
 
 enum class RequestType { GET, POST, OTHER };
-enum class ContentType { HTML, IMAGE };
-constexpr int BUFFER_SIZE = 2 * 1024;	//2MB
+enum class ContentType { HTML, JPG, TEXT, OTHER };
+constexpr int BUFFER_SIZE = 1024 * 1024;	//1MB
 
 //在字符串末尾追加整数
 void appendInt(string& str, const int i);
@@ -36,6 +36,6 @@ string parseFilePath(const char* pkt, const int length);
 RequestType parseRequestType(const char* pkt, const int length);
 
 //向客户端发送文件
-bool sendFile(const SOCKET& sServer, fstream& fs);
+bool sendFile(const SOCKET& sServer, fstream& fs, string status, string conType);
 
 #endif

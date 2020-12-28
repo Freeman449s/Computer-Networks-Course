@@ -74,17 +74,51 @@ int countNLines(fstream& fs) {
 	return nLines;
 }
 
-//todo
 vector<string> parseAccountAndPwd(const char* pkt, const int length) {
-	
+	string p(pkt);
+	string flag;
+	string::size_type positon_account;
+	string::size_type positon_password;
+	vector<string> res;
+
+	positon_account = p.find("name=\"account\"");
+	if (positon_account != p.npos)
+	{
+		positon_account += 18;
+		int account_length = 0;
+		while (pkt[positon_account + account_length] != '\r')  account_length++;
+		string account = p.substr(positon_account, account_length);
+		res.push_back(account);
+	}
+	else res.push_back("");
+
+	positon_password = p.find("name=\"pwd\"");
+	if (positon_password != p.npos)
+	{
+		positon_password += 14;
+		int password_length = 0;
+		while (pkt[positon_password + password_length] != '\r')  password_length++;
+		string password = p.substr(positon_password, password_length);
+		res.push_back(password);
+	}
+	else res.push_back("");
+
+	return res;
 }
 
 ContentType parseContentType(const char* pkt, const int length) {
 	string filePath = parseFilePath(pkt, length);
-	if (filePath.size() > 5 && filePath.substr(filePath.size() - 5, filePath.size()) == ".html") {
+	if (filePath == "/") return ContentType::HTML;
+	if (filePath.size() > 5 && filePath.substr(filePath.size() - 5, 5) == ".html") {
 		return ContentType::HTML;
 	}
-	//todo 图片类型
+	if (filePath.size() > 4 && filePath.substr(filePath.size() - 4, 4) == ".txt") {
+		return ContentType::TEXT;
+	}
+	if (filePath.size() > 4 && filePath.substr(filePath.size() - 4, 4) == ".jpg") {
+		return ContentType::JPG;
+	}
+	return ContentType::OTHER;
 }
 
 string parseFilePath(const char* pkt, const int length) {
@@ -112,9 +146,9 @@ RequestType parseRequestType(const char* pkt, const int length) {
 	else return RequestType::OTHER;
 }
 
-bool sendFile(const SOCKET& sServer, fstream& fs) {
+bool sendFile(const SOCKET& sServer, fstream& fs, string status, string conType) {
 	char* sendBuf = new char[BUFFER_SIZE];
-	int pktLength = constructPkt("404", "text/html", fs, sendBuf);
+	int pktLength = constructPkt(status, conType, fs, sendBuf);
 	//发送至客户端
 	int ret = send(sServer, sendBuf, pktLength, 0);
 	delete[] sendBuf;

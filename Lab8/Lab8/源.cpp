@@ -17,6 +17,8 @@ const string SERVER_ROOT = "../Server Files";	//服务器根
 
 //为接入客户端分配ID，接入客户端数量达到最大值时返回-1
 int allocateID(const map<int, struct sockaddr_in>& clientAddrs);
+//返回客户端的套接字号
+string getClientAddr(const sockaddr_in* clientAddr, bool upper);
 //初始化服务器程序
 bool initialize(WORD& wVersionRequested, WSADATA& wsaData, SOCKET& sListen, struct sockaddr_in& saServer);
 //在控制台输出客户端的IP地址和端口信息
@@ -64,11 +66,28 @@ int main() {
 		clientAddrs.insert(pair<int, struct sockaddr_in>(clientID, saClient));
 		clientSockets.insert(pair<int, SOCKET>(clientID, sServer));
 		thread t(recvRequest, clientID, ref(clientAddrs), ref(clientSockets));
-		t.detach(); //todo 线程操作
+		t.detach();
 	}
 
 	closesocket(sListen);
 	WSACleanup();
+}
+
+int allocateID(const map<int, struct sockaddr_in>& clientAddrs) {
+	for (int i = 1; i <= MAX_CONNECTION; i++) {
+		if (!clientAddrs.count(i)) return i;
+	}
+	return -1;
+}
+
+string getClientAddr(const sockaddr_in* clientAddr, bool upper) {
+	string ret = "";
+	if (!upper) ret += "client ";
+	else ret += "Client ";
+	ret += inet_ntoa(clientAddr->sin_addr);
+	ret += ":";
+	appendInt(ret, ntohs(clientAddr->sin_port));
+	return ret;
 }
 
 bool initialize(WORD& wVersionRequested, WSADATA& wsaData, SOCKET& sListen, struct sockaddr_in& saServer) {
@@ -125,13 +144,6 @@ bool initialize(WORD& wVersionRequested, WSADATA& wsaData, SOCKET& sListen, stru
 	return true;
 }
 
-int allocateID(const map<int, struct sockaddr_in>& clientAddrs) {
-	for (int i = 1; i <= MAX_CONNECTION; i++) {
-		if (!clientAddrs.count(i)) return i;
-	}
-	return -1;
-}
-
 void recvRequest(int clientID, map<int, struct sockaddr_in>& clientAddrs, map<int, SOCKET>& clientSockets) {
 	SOCKET& sServer = clientSockets.at(clientID);
 	char* const recvBuf = new char[BUFFER_SIZE];
@@ -160,13 +172,12 @@ void recvRequest(int clientID, map<int, struct sockaddr_in>& clientAddrs, map<in
 		return;
 	}
 
-	cout << recvBuf;
 	bool ret=processRequest(recvBuf, recvdLength, sServer);
 	if (ret == true) {
-		//todo 输出提示信息
+		cout << " > Request from " << getClientAddr(clientAddr, false) << " has been processed properly. Thread terminated." << endl;
 	}
 	else {
-		//todo
+		cout << " > Warning: Failed to process request from " << getClientAddr(clientAddr, false) << " properly. Thread terminated." << endl;
 	}
 	closesocket(sServer);
 	clientSockets.erase(clientID);
@@ -181,22 +192,30 @@ bool processRequest(const char* pkt, const int length, const SOCKET& sServer) {
 		ContentType conType = parseContentType(pkt, length);
 		string filePath = SERVER_ROOT;
 		if (conType == ContentType::HTML) {
-			filePath += "/html" + parseFilePath(pkt, length);
+			if (parseFilePath(pkt, length) == "/") filePath += "/index.html";
+			else filePath += "/html" + parseFilePath(pkt, length);
 			fs.open(filePath.c_str(), ios::binary | ios::in);
 		}
-		else if (conType == ContentType::IMAGE) {
-			filePath += "/img" + parseFilePath(pkt, length);
+		else if (conType == ContentType::JPG) {
+			filePath += parseFilePath(pkt, length);
+			fs.open(filePath.c_str(), ios::binary | ios::in);
+		}
+		else if (conType == ContentType::TEXT) {
+			filePath += "/txt" + parseFilePath(pkt, length);
 			fs.open(filePath.c_str(), ios::binary | ios::in);
 		} //其他文件类型不予考虑
-		//todo 返回图像文件
+		//todo 测试图像传输
 		if (!fs.is_open()) { //文件不存在，返回Not Found文件
 			fs.open(SERVER_ROOT + "/html/notFound.html", ios::in | ios::binary);
-			bool successful = sendFile(sServer, fs);
+			bool successful = sendFile(sServer, fs, "404", "text/html");
 			fs.close();
 			return successful;
 		}
 		else { //文件存在，返回所需文件
-			bool successful = sendFile(sServer, fs);
+			bool successful;
+			if (conType == ContentType::HTML) successful = sendFile(sServer, fs, "200", "text/html");
+			else if (conType == ContentType::TEXT) successful = sendFile(sServer, fs, "200", "text/plain");
+			else successful = sendFile(sServer, fs, "200", "image/jpeg"); //外层if确保类型只可能是TEXT, HTML和JPG
 			fs.close();
 			return successful;
 		}
@@ -205,7 +224,7 @@ bool processRequest(const char* pkt, const int length, const SOCKET& sServer) {
 		string url = parseFilePath(pkt, length);
 		if (url != "/dopost") { //请求路径不正确，返回Not Found
 			fs.open(SERVER_ROOT + "/html/notFound.html", ios::in | ios::binary);
-			bool successful = sendFile(sServer, fs);
+			bool successful = sendFile(sServer, fs, "404", "text/html");
 			fs.close();
 			return successful;
 		}
@@ -221,13 +240,13 @@ bool processRequest(const char* pkt, const int length, const SOCKET& sServer) {
 		}
 		if (loginSuccess) {
 			fs.open(SERVER_ROOT + "/html/loginSuccess.html", ios::in | ios::binary);
-			bool successful = sendFile(sServer, fs);
+			bool successful = sendFile(sServer, fs, "200", "text/html");
 			fs.close();
 			return successful;
 		}
 		else {
 			fs.open(SERVER_ROOT + "/html/loginFailure.html", ios::in | ios::binary);
-			bool successful = sendFile(sServer, fs);
+			bool successful = sendFile(sServer, fs, "200", "text/html");
 			fs.close();
 			return successful;
 		}
