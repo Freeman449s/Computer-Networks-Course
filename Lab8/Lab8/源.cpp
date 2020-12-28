@@ -172,7 +172,7 @@ void recvRequest(int clientID, map<int, struct sockaddr_in>& clientAddrs, map<in
 		return;
 	}
 
-	bool ret=processRequest(recvBuf, recvdLength, sServer);
+	bool ret = processRequest(recvBuf, recvdLength, sServer);
 	if (ret == true) {
 		cout << " > Request from " << getClientAddr(clientAddr, false) << " has been processed properly. Thread terminated." << endl;
 	}
@@ -204,7 +204,6 @@ bool processRequest(const char* pkt, const int length, const SOCKET& sServer) {
 			filePath += "/txt" + parseFilePath(pkt, length);
 			fs.open(filePath.c_str(), ios::binary | ios::in);
 		} //其他文件类型不予考虑
-		//todo 测试图像传输
 		if (!fs.is_open()) { //文件不存在，返回Not Found文件
 			fs.open(SERVER_ROOT + "/html/notFound.html", ios::in | ios::binary);
 			bool successful = sendFile(sServer, fs, "404", "text/html");
