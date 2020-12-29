@@ -121,7 +121,7 @@ bool initialize(WORD& wVersionRequested, WSADATA& wsaData, SOCKET& sListen, stru
 											//四字节调用htonl，两字节调用htons
 											//int传入htons高位截断，不截断反而可能出错
 											//htons: Host TO Network Short
-	saServer.sin_addr.S_un.S_addr = htonl(INADDR_ANY);	//使用INADDR_ANY指示任意地址
+	saServer.sin_addr.s_addr = inet_addr("0.0.0.0");	//使用INADDR_ANY指示任意地址
 
 	//绑定socket句柄与服务器地址
 	ret = ::bind(sListen, (struct sockaddr*)&saServer, sizeof(saServer));
