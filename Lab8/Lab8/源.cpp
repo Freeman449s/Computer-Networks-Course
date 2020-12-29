@@ -174,10 +174,10 @@ void recvRequest(int clientID, map<int, struct sockaddr_in>& clientAddrs, map<in
 
 	bool ret = processRequest(recvBuf, recvdLength, sServer);
 	if (ret == true) {
-		cout << " > Request from " << getClientAddr(clientAddr, false) << " has been processed properly. Thread terminated." << endl;
+		cout << " > Request from " << getClientAddr(clientAddr, false) << " has been processed properly. Thread " << clientID << " terminated." << endl;
 	}
 	else {
-		cout << " > Warning: Failed to process request from " << getClientAddr(clientAddr, false) << " properly. Thread terminated." << endl;
+		cout << " > Warning: Failed to process request from " << getClientAddr(clientAddr, false) << " properly. Thread " << clientID << " terminated." << endl;
 	}
 	closesocket(sServer);
 	clientSockets.erase(clientID);

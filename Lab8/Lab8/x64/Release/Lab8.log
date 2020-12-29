@@ -1,0 +1,12 @@
+﻿  源.cpp
+D:\工程文件\C++\3年级\Computer-Networks-Course\Lab8\Lab8\Util.h(18,44): warning C4227: 使用了记时错误: 忽略引用上的限定符
+D:\工程文件\C++\3年级\Computer-Networks-Course\Lab8\Lab8\Util.h(18,77): warning C4227: 使用了记时错误: 忽略引用上的限定符
+D:\工程文件\C++\3年级\Computer-Networks-Course\Lab8\Lab8\Util.h(18,96): warning C4227: 使用了记时错误: 忽略引用上的限定符
+D:\工程文件\C++\3年级\Computer-Networks-Course\Lab8\Lab8\Util.h(21,31): warning C4227: 使用了记时错误: 忽略引用上的限定符
+D:\工程文件\C++\3年级\Computer-Networks-Course\Lab8\Lab8\源.cpp(34,6): warning C4101: “ret”: 未引用的局部变量
+  正在生成代码
+  2 of 531 functions ( 0.4%) were compiled, the rest were copied from previous compilation.
+    0 functions were new in current compilation
+    2 functions had inline decision re-evaluated but remain unchanged
+  已完成代码的生成
+  Lab8.vcxproj -> D:\工程文件\C++\3年级\Computer-Networks-Course\Lab8\x64\Release\Lab8.exe
