@@ -42,7 +42,10 @@ int main() {
 
 	if (initialize(wVersionRequested, wsaData, sListen, saServer))
 		cout << " > Server startup finished. Awaiting connection." << endl;
-	else cout << " > Unable to start server. Program terminated." << endl;
+	else {
+		cout << " > Unable to start server. Program terminated." << endl;
+		return 0;
+	}
 
 	while (true) {
 		//线程数达到最大，1秒后重试
