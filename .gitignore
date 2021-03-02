@@ -33,3 +33,9 @@
 
 # Visual Studio
 .vs
+
+# 样例工程
+Lab7/Samples
+
+# 分析用文件
+Lab8/分析文件

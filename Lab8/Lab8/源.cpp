@@ -234,12 +234,9 @@ bool processRequest(const char* pkt, const int length, const SOCKET& sServer) {
 		string account = loginInfo[0];
 		string pwd = loginInfo[1];
 		bool loginSuccess = false;
-		if (account == "3180101042") {
-			if (pwd == "1042") loginSuccess = true;
-		}
-		else if (account == "3180105058") {
-			if (pwd == "5058") loginSuccess = true;
-		}
+
+		//账号密码校验过程被省略
+		
 		if (loginSuccess) {
 			fs.open(SERVER_ROOT + "/html/loginSuccess.html", ios::in | ios::binary);
 			bool successful = sendFile(sServer, fs, "200", "text/html");
